@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block content %}
+
+<h1> {{title}} </h1>
+
+{% if messages %}
+    {% for message in messages %}
+        <div id="message">
+            {{message}}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% for tarea in tareas %}
+<div class="container pt-5">
+    <ul>
+        <li>
+            <h3>{{tarea.title}}</h3>
+            <h5>{{tarea.description}}</h5>
+            <p class="text-secondary">{{tarea.created_at}}</p>
+
+            {% if tarea.status %}
+                <p class="text-info">Completada</p>
+            {% else %}
+                <p class="text-warning">Pendiente</p>
+            {% endif %}
+
+            <div class="d-flex gap-3 pb-3">
+                <button class="btn btn-primary rounded-pill px-3" type="button"><a href="{% url "editar_tarea" tarea.id %}" style="text-decoration: none; color:white">Editar</a></button>
+                <button class="btn btn-danger rounded-pill px-3" type="button"><a href="{% url "borrar" tarea.id %}" style="text-decoration: none; color:white">Eliminar</a></button>
+            </div>
+        </li>
+    </ul>
+</div>
+{% endfor %}
+
+{% endblock %}
